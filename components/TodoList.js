@@ -22,7 +22,11 @@ export default class TodoList extends React.Component {
           visible={this.state.showListVisible}
           onRequestClose={() => this.toggleListModal()}
         >
-          <TodoModal list={list} closeModal={() => this.toggleListModal()} />
+          <TodoModal
+            list={list}
+            closeModal={() => this.toggleListModal()}
+            updateList={this.props.updateList}
+          />
         </Modal>
         <TouchableOpacity
           style={[styles.listContainer, { backgroundColor: list.color }]}
@@ -49,7 +53,8 @@ export default class TodoList extends React.Component {
 
 const styles = StyleSheet.create({
   listContainer: {
-    paddingVertical: 32,
+    marginTop: 30,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 6,
     marginHorizontal: 12,

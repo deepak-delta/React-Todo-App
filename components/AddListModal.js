@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import colors from "../Colors";
 import { AntDesign } from "@expo/vector-icons";
-import tempData from "../tempData";
 
 export default class AddListModal extends React.Component {
   backgroundcolor = [
@@ -30,11 +29,8 @@ export default class AddListModal extends React.Component {
   createTodo = () => {
     const { name, color } = this.state;
 
-    tempData.push({
-      name,
-      color,
-      todos: [],
-    });
+    const list = { name, color };
+    this.props.addList(list);
 
     this.setState({ name: "" });
     this.props.closeModal();
@@ -51,9 +47,24 @@ export default class AddListModal extends React.Component {
       );
     });
   }
+
+  CheckTextInput = () => {
+    const name = this.state;
+    if (name.name != "") {
+      {
+        this.createTodo();
+      }
+    } else {
+      alert("List title can't be empty!");
+    }
+  };
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={-500}
+      >
         <TouchableOpacity
           style={{ position: "absolute", top: 15, right: 20 }}
           onPress={this.props.closeModal}
@@ -64,7 +75,7 @@ export default class AddListModal extends React.Component {
           <Text style={styles.title}>Create Todo List</Text>
           <TextInput
             style={styles.input}
-            placeholder="List Name?"
+            placeholder="Add List ?"
             onChangeText={(text) => this.setState({ name: text })}
           />
 
@@ -80,7 +91,7 @@ export default class AddListModal extends React.Component {
 
           <TouchableOpacity
             style={[styles.create, { backgroundColor: this.state.color }]}
-            onPress={this.createTodo}
+            onPress={this.CheckTextInput}
           >
             <Text style={{ color: colors.white }}>Create!</Text>
           </TouchableOpacity>
